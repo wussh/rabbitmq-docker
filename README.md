@@ -1,66 +1,53 @@
-# RabbitMQ Cluster Docker
+# RabbitMQ Cluster Docker Setup
 
-Setup a RabbitMQ Cluster environment on your device using the pure [RabbitMQ](https://hub.docker.com/_/rabbitmq/) official docker image with Docker Compose.
+This guide provides a straightforward method to set up a RabbitMQ Cluster environment using the official RabbitMQ Docker image with Docker Compose. This setup includes built-in load balancing with HAProxy for improved scalability and performance.
 
 ## Features
 
-- Super easy setup, config and expand
-- Use a purely official RabbitMQ image
-- Support latest version, optimized for Erlang cookie config
-- Build-in HAProxy load balancing
+- **Easy Setup**: Quick and straightforward configuration with Docker Compose.
+- **Official Image**: Utilizes the latest official RabbitMQ image for optimal performance and compatibility.
+- **Erlang Cookie Management**: Automatically handles Erlang cookie configuration for seamless clustering.
+- **Built-in Load Balancing**: Leverages HAProxy for efficient load balancing across RabbitMQ nodes.
 
-## Quick start
+## Quick Start
 
+To launch the RabbitMQ cluster, simply run:
+
+```bash
+docker-compose up
 ```
-docker compose up
-```
 
-Open http://localhost:15672 to login RabbitMQ dashboard.
+Once the services are up and running, access the RabbitMQ dashboard at:
 
-> Username: `guest`  
-> Password: `guest`
+[http://localhost:15672](http://localhost:15672)
+
+**Login Credentials:**
+
+- **Username**: `guest`  
+- **Password**: `guest`
 
 ## Configuration
 
 ### `docker-compose.yml`
 
-Docker [compose](https://docs.docker.com/compose/compose-file/) config file, including 3 RabbitMQ service cluster and a HAProxy.
+The following `docker-compose.yml` file configures three RabbitMQ services and one HAProxy load balancer:
+
+#### Services Overview
 
 | Service     | Description               |
 | ----------- | ------------------------- |
-| `rabbitmq1` | RabbitMQ (cluster)        |
-| `rabbitmq2` | RabbitMQ (cluster member) |
-| `rabbitmq3` | RabbitMQ (cluster member) |
-| `haproxy`   | Load Balancer             |
+| `rabbitmq1` | Primary RabbitMQ instance (cluster)        |
+| `rabbitmq2` | Secondary RabbitMQ instance (cluster member) |
+| `rabbitmq3` | Tertiary RabbitMQ instance (cluster member) |
+| `haproxy`   | Load Balancer for RabbitMQ nodes             |
 
-#### Default expose ports
+### Default Exposed Ports
 
 | Host              | Description                                         |
 | ----------------- | --------------------------------------------------- |
 | `localhost:5672`  | AMQP 0-9-1 and AMQP 1.0 clients                     |
-| `localhost:15672` | HTTP API clients, management UI and `rabbitmqadmin` |
-
-### `.env`
-
-| Name                     | Default |
-| ------------------------ | ------- |
-| `RABBITMQ_DEFAULT_USER`  | guest   |
-| `RABBITMQ_DEFAULT_PASS`  | guest   |
-| `RABBITMQ_DEFAULT_VHOST` | /       |
-
-### `.erlang.cookie`
-
-Put your custom [Erlang Cookie](https://www.rabbitmq.com/clustering.html#erlang-cookie) inside this file (default: `12345`) for the nodes in cluster communicate with each other.
+| `localhost:15672` | HTTP API clients, management UI, and `rabbitmqadmin` |
 
 ### `haproxy.cfg`
 
-Load balancer [HA Proxy](http://www.haproxy.org/) config. Including the load balancing config and the hostnames of the nodes in cluster.
-
-## References
-
-- [docker-rabbitmq-cluster](https://github.com/pardahlman/docker-rabbitmq-cluster)
-- [rabbitmq-cluster](https://github.com/JohnnyVicious/rabbitmq-cluster)
-
-## LICENSE
-
-MIT
+Configure the HAProxy load balancer with the following settings. Create a file named `haproxy.cfg` in the same directory as your `docker-compose.yml`.
