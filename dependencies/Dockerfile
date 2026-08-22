@@ -1,4 +1,4 @@
-FROM rabbitmq:4.0.2-management-alpine
+FROM rabbitmq:4.3.5-management-alpine
 
 # Update apk and install required packages
 RUN apk update && apk --no-cache add curl unzip

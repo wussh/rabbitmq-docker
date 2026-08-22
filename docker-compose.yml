@@ -1,6 +1,6 @@
 services:
   rabbitmq1:
-    image: rabbitmq:4.0.2-management
+    image: rabbitmq:4.3.5-management
     # build:
     #   dockerfile: ./dependencies/Dockerfile
     hostname: rabbitmq1
@@ -20,7 +20,7 @@ services:
       - rabbitmq
 
   rabbitmq2:
-    image: rabbitmq:4.0.2-management
+    image: rabbitmq:4.3.5-management
     # build:
     #   dockerfile: ./dependencies/Dockerfile
     hostname: rabbitmq2
@@ -40,7 +40,7 @@ services:
       - rabbitmq
 
   rabbitmq3:
-    image: rabbitmq:4.0.2-management
+    image: rabbitmq:4.3.5-management
     # build:
     #   dockerfile: ./dependencies/Dockerfile
     hostname: rabbitmq3
