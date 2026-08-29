@@ -60,7 +60,7 @@ services:
       - rabbitmq
 
   haproxy:
-    image: haproxy:2.2.33
+    image: haproxy:3.4.4
     volumes:
       - ./haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg:ro
     depends_on:
